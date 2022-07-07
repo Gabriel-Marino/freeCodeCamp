@@ -1,3 +1,5 @@
+## JavaScript is a scripting language that can be used to write programs that run in a web browser. With CSS and HTML, JavaScript is one of the core technologies used to build web applications. And here is the basics.
+
 ```JavaScript
 
 // this is a comment
