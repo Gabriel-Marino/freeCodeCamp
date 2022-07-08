@@ -3,7 +3,7 @@
 ```JavaScript
 /**
  * Regular Expressions are powerfull matching tools, usually written betweeen slashes, like /regex/
- * They are used to find patterns in text.
+ * They are patterns used to find and replace text in a string.
  * The test method is used to test if a string matches a regular expression, is used regex.test(string) and return a boolean.
  * Is possible to use the alternation operator | in the regex to look for multiple alternatives.
  * Afther the slash in the regex is possible to use modifiers, the first is i to ignore case.
@@ -59,4 +59,82 @@ const goRegex = /go*/gi;
 const match = "Gooooooooooooooooooal!".match(goRegex);      // ["Goooooooooooooooooo"]
 const match = "Gut fellings".match(goRegex);                // ["G"]
 const match = "fly me to the moon".match(goRegex);          // null
+
+const AaREGEX = /Aa*/g; // will match all sub-strings with A but not necessarily with a
+const match = "Aaaaaaaaaaaaaaaarrrgh!".match(AaREGEX);                                  // ["Aaaaaaaaaaaaaaaa"]
+const match = "Let him have it. It's not wise to upset a Wookiee.".match(AaREGEX);      // null
+
+/**
+ * A greedy regex is a regex that will match the longest possible string. The alternative is a lazy regex, which will match the shortest possible string.
+ * The greedy regex is used like /t[a-z]*i/ applied in "titanic" would return "titani", and the lazy regex write as /t[a-z]*?i/ would return "ti".
+ * it's not recommend to parsing html with regex, but to match a string in the html with regex is fine.
+ */
+
+const greedy = /<.*>/;
+const lazy = /<.*?>/;
+const html = "<h1>Hello World</h1>";
+const match = html.match(greedy);   // ["<h1>Hello World</h1>"]
+const match = html.match(lazy);     // ["<h1>"]
+
+/**
+ * The negate operator (caret character) inside characters set will negate all characters except the ones in the set,
+ * but when used outside a character set, it will search only for the first substring that matches the pattern.
+ * The alternative for the caret and match a pattern within the end of a string is the dollar sign, which will match the last substring.
+ * The dolar sign is used at the end of the regex.
+ */
+
+const caretRegex = /^Hello/;
+const test = caretRegex.test("Hello World");                                             // true
+const test = caretRegex.test("Good Morning, Hello World");                               // false
+const test = caretRegex.test("Hello first and can be found");                            // true
+const test = caretRegex.test("If you say anything before Hello, it can't be found");     // false
+
+const dollarRegex = /World$/;
+const test = dollarRegex.test("Hello World");                                           // true
+const test = dollarRegex.test("Hello Wolrd, I am here");                                // false
+const test = dollarRegex.test("Wolrd is not the last word in the sentence");            // false
+
+/**
+ * shorthand character classes are shortcuts to common character sets,
+ * like \w is for all alphanumeric characters ([a-zA-Z0-9_]), \d for all digits ([0-9]), \s for all whitespace characters.
+ * \s is the equivalent of [\r\t\v\n\f]. In the case of \w it has one more character besides the alphanumeric characters, the underscore.
+ * And you can access the negated versions of the shorthands by using the same letter but in Capital, like the negation of \w is \W.
+ * Beside + and *, you can match a certain range of patterns, so is possible to specify the range using curly brackets after the pattern.
+ * For example, the regex /[a-z]{2,4}/ will match all strings with at least two characters and at most four characters.
+ * And still possible to define only the minimum number of characters, so the regex /[a-z]{2,}/ will match all strings with at least two characters.
+ * And if you want a specific number of characters, is just need to use the curly brackter without the comma and the exact number of characters.
+ * For example, the regex /[a-z]{2}/ will match all strings with exactly two characters.
+ */
+
+const regex = /[a-z]{2,4}/g; // will match all strings with at least two characters and at most four characters
+const regex = /[a-z]{6,}/g;  // will match all strings with at least six characters
+const regex = /[a-z]{12}/g;   // will match all strings with exactly twelve characters
+
+/**
+ * Some languages although being "the same" have little differences in their syntax,
+ * like American English and British English or Brazilian Portuguese and Portugal Portuguese.
+ * So is possible sometimes a character exists or not in the pattern given the language. Then to verify if a character exists in a pattern,
+ * you can use the question mark (?) character to match the pattern even the character doesn't exist in the string.
+ * lookaheads are patterns to match multiple patterns over the same string, the lookaheads can be positive or negative.
+ * A positive (?=) lookahead is used to test if the patterm is present in the string and return the matching string.
+ * A negative (?!) lookahead is used to test if the pattern is not present and case isn't then return the match of the string.
+ */
+
+const regex = /colou?r/; // will match "color" and "colour"
+
+const positive = /portug(?=u)/gi;
+const match = "Portugual".match(positive);  // ["Portug"]
+const match = "Portugal".match(positive);   // null
+const test = positive.test("Portugual");    // true
+const test = positive.test("Portugal");     // false
+
+const negative = /portug(?!u)al/gi;
+const test = negative.test("Portugal");     // true
+const test = negative.test("Portugual");    // false
+const match = "Portugal".match(negative);   // ["Portugal"]
+const match = "Portugual".match(negative);  // null
+
+/**
+ * 
+ */
 ```

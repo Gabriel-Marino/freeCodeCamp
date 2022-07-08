@@ -15,3 +15,5 @@ new RegExp('expression', modifiers)
 * (x|y)  find any of the alternatives x or y
 
 **example** /[^a-z0-9]/gi is to find all non alphanumeric characters
+
+[Cheatsheet](https://www.shortcutfoo.com/app/dojos/regex/cheatsheet)
