@@ -4,7 +4,11 @@
  */
 
 let sampleWord = "astronaut";
-let pwRegex = /(?=\D+)(?=\w{5,}\d+)(?!banan1)/; // Change this line
+let pwRegex = /(?=\D*)(?=[a-z]\d\d){5,}/i; // Change this line
 let result = pwRegex.test(sampleWord);
 
-// not the best way to do this, but only the "banan1" test keep failing, tomorrow i'll rewrite this
+/**
+ * first attempt, i was tired and forced the negative lookahead of "banan1" because it was the only test which kept failing,
+ * but i tried again and came up with the regex in line 7, which worked fine. 
+ */
+// let pwRegex = /(?=\D+)(?=\w{5,}\d+)(?!banan1)/;

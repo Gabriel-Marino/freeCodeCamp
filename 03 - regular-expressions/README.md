@@ -135,6 +135,47 @@ const match = "Portugal".match(negative);   // ["Portugal"]
 const match = "Portugual".match(negative);  // null
 
 /**
- * 
+ * You can use the parentheses to group patterns, so is possible to match a group of patterns.
+ * For example if you want to match pumpkin and/or penguin, you can use the regex /p(engu|umpk)in/gi.
+ * You can use the parentheses to create capture groups, so you can match a pattern which repeat in row through the string without knowing the pattern.
+ * Capture groups are created by enclosing the pattern in parentheses. And they're stored like a "variable" and can be accessed by the regex where
+ * they're defined using backlashes and the number of the group, the groups are numbered from 1 and in the order they're defined.
+ * Is needed to repeat the backlashes the amount of times minus 1 the pattern can be repeated in the string.
+ * Like if you want to match the three repetitions, the first is the group definition and then the second and third are matched with the backlashes.
  */
+
+const pInRegex = /p(engu|umpk)in/gi;
+const test = pInRegex.test("Pumpkin"); // true
+const test = pInRegex.test("Penguin"); // true
+const match = "Pumpkin and Penguin".match(pInRegex); // ["Pumpkin", "Penguin"]
+
+const groupRegex1 = /(\d+) \1 \1/;           // will match all numbers that are repeated three times
+const test = groupRegex1.test("1 1 1");      // true
+const test = groupRegex1.test("24 42 42");   // false
+const test = groupRegex1.test("242 42 42");  // true, matches the 42's
+const test = groupRegex1.test("24 4 42");    // true, matches the 4's
+
+const groupRegex2 = /(\d+) \1/;              // will match all numbers that are repeated twice
+const test = groupRegex2.test("1 1");        // true
+const test = groupRegex2.test("24 42");      // true, matches the 4's
+
+let testString = "test test test";
+let reRegex = /(test)(\s)\1\2\1/;       // \1 repeat "test" and \2 repeat the \s (whitespace).
+let result = reRegex.test(testString);  // true
+
+/**
+ * Beyond the search methods (match, test), you have methods to replace patterns in a string.
+ * You can call the replace method on a string with .replace(/regex/, "string to replace").
+ * Beside a string, is possible to pass a function to replace to do some custom logic.
+ * Is possible even to use capture groups and call them in the second parameter of the replace to do some custom logic.
+ * Like string.replace(/(\w+)\s(\w+)/, "$2 $1") will shift the first and second words in the string.
+ */
+
+const reverseRegex = /(\w+)\s(\w+)/;    // wiil reverse the first and second words in the string
+const reverseString = "John Doe".replace(reverseRegex, "$2 $1");        // "Doe John"
+const reverseString = "one two three".replace(reverseRegex, "$2 $1");   // "two one three"
+
+const removeWSRegex = /^(\s+)|(\s+)$/g; // will remove the whitespace at the beginning and end of the string, do the same as trim()
 ```
+
+[Regular Expressions Cheatsheet](https://www.shortcutfoo.com/app/dojos/regex/cheatsheet)
