@@ -1,4 +1,5 @@
-# freeCodeCamp---JavaScript-Algorithms-and-Data-Structures
+# JavaScript Algorithms and Data Structures
 
+The fundamentals of JavaScript. And an introduction to Functional and Object-Oriented Programming.
 
-[freeCodeCamp course here](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/)
+[check the course here](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/)
