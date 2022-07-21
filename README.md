@@ -1,3 +1,3 @@
-# Free Code Camp courses i made
+# Free Code Camp courses i did
 
 [Check the courses here](https://www.freecodecamp.org/learn/)

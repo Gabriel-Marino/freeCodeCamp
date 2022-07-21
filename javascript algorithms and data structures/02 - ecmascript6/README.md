@@ -1,4 +1,4 @@
-## ECMAScript or ES is the standardized version of JavaScript. All modern browsers follow the ECMAScript standard. JS and ES are interchangable. Almost everything in the basic module is from ES5 which was finalized in 2009. ES6 was released in 2015 and come with many powerful features. ES5 still works, but ES6 is more modern.
+## ECMAScript or ES is the standardized version of JavaScript. All modern browsers follow the ECMAScript standard. JS and ES are interchangeable. Almost everything in the basic module is from ES5 which was finalized in 2009. ES6 was released in 2015 and comes with many powerful features. ES5 still works, but ES6 is more modern.
 
 ```JavaScript
 /**

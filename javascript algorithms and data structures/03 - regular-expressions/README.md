@@ -1,4 +1,4 @@
-## Regular Expressions usually "regex" or "regexp" are patterns that helps in find, match and replace text in a string. Are very powerful, but can be easily confunsig.
+## Regular Expressions usually "regex" or "regexp" are patterns that help in finding, matching and replacing text in a string. Are very powerful, but can be easily confusing.
 
 ```JavaScript
 /**

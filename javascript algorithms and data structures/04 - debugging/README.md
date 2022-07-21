@@ -1,6 +1,6 @@
-## Debugging  is the process of finding and fixing errors in a program. Exists three basic type of erros: Syntax, Logic, and Runtime.
-#### Syntax error is when something was not written correctly, like calling a function or variable (transposed, missing or mis-capitalized character).
-#### Logic errors is when the program don't output what was expected, like a program which could sum numbers but instead is subtracting.
+## Debugging is the process of finding and fixing errors in a program. Exists three basic types of errors: Syntax, Logic, and Runtime.
+#### A syntax error is when something was not written correctly, like calling a function or variable (transposed, missing or mis-capitalized character).
+#### Logic errors are when the program doesn't output what was expected, like a program that could sum numbers but instead is subtracting.
 ### Runtime errors are when something goes wrong when running the program.
 
 ```JavaScript
