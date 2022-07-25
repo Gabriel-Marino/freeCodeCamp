@@ -1,3 +1,6 @@
+## Object Oriented Programming or OOP is one of the biggest paradigms used nowadays. OOP focuses on Objects and Classes which help abstract things from the real-worlds with ways to describe what they're and what they can do.
+## Here is the basic of OOP in JavaScript, including the 'this' keyword, prototype chains, constructors, and inheritance.
+
 ```JavaScript
 /**
  * Object are models to real-world things be they an animal, a vehicle, a store, anything.

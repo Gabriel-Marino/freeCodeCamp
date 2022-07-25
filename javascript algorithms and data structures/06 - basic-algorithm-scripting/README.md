@@ -1,4 +1,4 @@
-An algorithm is a "recipe" of how to do something. An efficient algorithm is made in smaller pieces, each solving a part of the problem.
+## An algorithm is a "recipe" of how to do something. An efficient algorithm is made in smaller pieces, each solving a part of the problem.
 
 ```JavaScript
 /**

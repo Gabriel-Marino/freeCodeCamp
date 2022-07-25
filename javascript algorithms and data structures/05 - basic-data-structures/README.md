@@ -1,3 +1,5 @@
+## Data can be stored in many ways, some of them are arrays and objects. Here you'll find when is best to use one or another type and some helpful methods to manipulate data.
+
 ```JavaScript
 /**
  * The simplest implementation of a data structure is an array, array can store another arrays, numbers, strings, booleans and objects.
