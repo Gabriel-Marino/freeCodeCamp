@@ -84,11 +84,56 @@ const sumOfNumbers = numbers.reduce((sum, num) => sum + num, 0);    // sumOfNumb
 const sumOfNumbers = numbers.reduce((sum, num) => sum + num);       // sumOfNumbers is equal to 10
 
 /**
+ * sort is another method used with arrays, sort have a default behavior which compare the items using their string unicode, which can lead to unexpected results.
+ * So it's recommend to always pass a callback function to the sort method. A calbback fucntion for sort method is called compareFunction.
+ * Every compareFunction should return values bigger, lesser or equal to zero, because it's with those values sort will tell where a item belong.
+ * For Example, if compareFunction(a,b) return lesser than 0 a come first than b, if it's bigger than 0 b come first than a, if return 0 then nothing change.
+ * sort is not a pute function, he mutates the original array, so it's recommended to use sort always with slice or concat with an empty array.
  */
 
-/**
- */
+[1, 2, 10, 20, 15, 9, 7, 12].sort();                // will return [ 1, 10, 12, 15, 2, 20, 7, 9 ]
+[1, 2, 10, 20, 15, 9, 7, 12].sort((a, b) => a - b); // will return [ 1, 2, 7, 9, 10, 12, 15, 20 ]
+["e", "a", "d", "k", "l", "j", "k", "b", "c"].sort();                   // will return [ 'a', 'b', 'c', 'd', 'e', 'j', 'k', 'k', 'l' ]
+["e", "a", "d", "k", "l", "j", "k", "b", "c"].sort((a, b) => a > b));   // will return [ 'a', 'b', 'c', 'd', 'e', 'j', 'k', 'k', 'l' ]
+const sortWithoutMutation = arr => {
+    const newarray = [].concat(arr);
+    const compareFunction = (a, b) => a > b;
+    newarray.sort(compareFunction);
+    return newarray;
+};
 
 /**
+ * split is a method used to turn string into arrays, split have one parameter which can be a RegExp or a character which delimit how the string will be splitted.
+ * For exemplae you could use string.split("") to separate every character from each other or string.split(" ") to separate each word, but sometimes
+ * word can be separated by ponctuation, so string.split(/\W/gi) would work much better.
+ * 
+ * otherwise join is used to do the other way around, you can turn arrays into strings, and like split, join have one parameter which is the delimiter
+ * how the items in the string shoulkd be put together, like array.join(" ") will join every item into a string beign each item separated by one whitespace.
+ * Another example for join is array.join("+") will join every item into a string beign each item separated by one plus sign.
  */
+
+"a-phrase.with/words.separated~by-something_but\\not!white#spaces".split(/\W|_/gi).join(" ").concat("."); // become "a phrase with words separated by something but not white spaces."
+
+/**
+ * every is a method used in array to check if every item in the array meets a given condition. Like [-10, 2, -7, 9, 14].every(num => num > 0) would return false.
+ * otherwise some method will evalutate to true if one or more items in the array meet the condition. Like [-10, 2, -7, 9, 14].some(num => num > 0) would return true.
+ */
+
+// Currying is the practice of transforming a function of arity N into N functions of arity one. Arity of a functions is the amount of parameters a function have.
+// For example
+const sum = (x, y, z) => x + y + z;     // this is a not curried function, because the arity is bigger than one.
+const sumC = x => y => z => x + y + z;  // this is a curried function, because we turned the function sum of arity 3 into 3 functions of arity one.
+// both sum and sumC have the same results, but sumC is called with sumC(x)(y)(z) while sum it's called as any other function like sum(x, y, z).
+/**
+ * The advantage of currying is the possibility to store the value of the first iterations for later, like at each parenthesis pair it's a new function call
+ * which return another function till to the last parenthesis, which then will recursively do the operations.
+ * For example
+ */
+const first = sumC(2);  // return y => z => 2 + y + z;
+const secon = first(4); // returm z => 2 + 4 + z;
+const third = secon(7); // return 2 + 4 + 7;
+
+// Similary, partial is a practice to passing few arguments to a function and pass this function to a new variable to use later, For example.
+const partialSum = sum.bind(this, 3, 7);
+const res = partialSum(5);  // return 5 + 3 + 7;
 ```
