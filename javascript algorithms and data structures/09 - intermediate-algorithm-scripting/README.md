@@ -133,44 +133,303 @@ function myReplace(str, before, after)
 }
 
 /**
+ * DNA Pairing
+ * 
+ * Pairs of DNA strands consist of nucleobase pairs. Base pairs are represented by the characters AT and CG, which form building blocks of the DNA double helix.
+ * 
+ * The DNA strand is missing the pairing element. Write a function to match the missing base pairs for the provided DNA strand.
+ * For each character in the provided string, find the base pair character. Return the results as a 2d array.
+ * 
+ * For example, for the input GCG, return [["G", "C"], ["C","G"], ["G", "C"]]
+ * 
+ * The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
  */
+function pairElement(str)
+{
+    const bases = {
+        "A": "T",
+        "T": "A",
+        "C": "G",
+        "G": "C"
+    };
+    const input = str.split("");
+    const output = input.map(base => [base, bases[base]]);
+    return output;
+}
 
 /**
+ * Missing letters
+ * 
+ * Find the missing letter in the passed letter range and return it.
+ * 
+ * If all letters are present in the range, return undefined.
  */
+function fearNotLetter(str)
+{
+    const char2code = str.split("").map(char => char.charCodeAt());
+    const missingCharIndex = char2code.map((_, i, arr) => Math.abs(arr[i] - arr[i-1])).indexOf(2);
+    if (missingCharIndex < 0) return;
+    const missingChar = String.fromCharCode(char2code[missingCharIndex - 1] + 1);
+    return missingChar;
+}
 
 /**
+ * Sorted Union
+ * 
+ * Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+ * 
+ * In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+ * 
+ * The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+ * 
+ * Check the assertion tests for examples.
  */
+function uniteUnique(...arr)
+{
+    const newArr = [];
+    arr.map(subarr =>
+        subarr.map(item => {
+            if (newArr.indexOf(item) < 0) newArr.push(item);
+        })
+    );
+    return newArr;
+}
 
 /**
+ * Convert HTML Entities
+ * 
+ * onvert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
  */
+function convertHTML(str)
+{
+    const entities = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "\'": "&apos;",
+    };
+    const RegExp = /([&<>"'])/g;
+    const charList = str.match(RegExp);
+    if (!charList) return str;
+    const newStr = str.split("")
+                        .map(char => {
+                            const ind = charList.indexOf(char);
+                            if (ind < 0) return char;
+                            return entities[char];
+                        }).join("");
+    return newStr;
+}
 
 /**
+ * Sum All Odd Fibonacci Numbers
+ * 
+ * Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+ * 
+ * The first two numbers in the Fibonacci sequence are 1 and 1. Every additional number in the sequence is the sum of the two previous numbers.
+ * The first six numbers of the Fibonacci sequence are 1, 1, 2, 3, 5 and 8.
+ * 
+ * For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5.
  */
+function sumFibs(num)
+{
+    const fibs = [0, 1];
+    while (num >= fibs[fibs.length - 1]) fibs.push(fibs[fibs.length - 1] + fibs[fibs.length - 2]);
+    const oddFibs = fibs.filter(fib => fib % 2 !== 0 && fib <= num);
+    const sum = oddFibs.reduce((acc, num) => acc + num);
+    return sum;
+}
 
 /**
+ * Sum All Primes
+ * 
+ * A prime number is a whole number greater than 1 with exactly two divisors: 1 and itself.
+ * For example, 2 is a prime number because it is only divisible by 1 and 2. In contrast, 4 is not prime since it is divisible by 1, 2 and 4.
+ * 
+ * Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
  */
+function sumPrimes(num)
+{
+    const isPrime = num => new Array(num).fill(0).map((_, i) => i+1).filter(div => num % div === 0).length === 2;
+    const primesSum = new Array(num).fill(0).map((_, i) => i+1).filter(isPrime).reduce((acc, num) => acc + num);
+    return primesSum;
+}
 
 /**
+ * Smallest Common Multiple
+ * 
+ * Find the smallest common multiple of the provided parameters that can be evenly divided by both,
+ * as well as by all sequential numbers in the range between these parameters.
+ * 
+ * The range will be an array of two numbers that will not necessarily be in numerical order.
+ * 
+ * For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by all numbers between 1 and 3. 
+ * The answer here would be 6.
  */
+function smallestCommons(arr)
+{
+    const [lesser, bigger] = arr.slice().sort((a, b) => a - b);
+    const [bigp1, map2index, notFalsy] = [bigger + 1, (_, i) => i, val => val];
+    const range = new Array(bigp1).fill(0, lesser, bigp1).map(map2index).filter(notFalsy);
+
+    // the following three lines are the solution from freeCodeCamp, i have been incapable of solving this by myself.
+    const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+    const lcm = (a, b) => a * b / gcd(a, b);
+    return range.reduce((acc, num) => lcm(acc, num));
+    /**
+     * moreover, i loved the way they writted the range like new Array(bigger - lesser + 1).fill(0).map((_, i) => i + lesser);
+     * i tried once to write like that and won't worked :/
+     */
+}
 
 /**
+ * Drop it
+ * 
+ * Given the array arr, iterate through and remove each element starting from the first element (the 0 index)
+ * until the function func returns true when the iterated element is passed through it.
+ * 
+ * Then return the rest of the array once the condition is satisfied, otherwise, arr should be returned as an empty array.
  */
+function dropElements(arr, func)
+{
+    const newArr = arr.map(func);
+    const index = newArr.indexOf(true);
+    return index >= 0 ? arr.slice(index) : [];
+}
 
 /**
+ * Steamroller
+ * 
+ * Flatten a nested array. You must account for varying levels of nesting.
  */
+function steamrollArray(arr)
+{
+    const newArr = [];
+    const flat = elem => newArr.push(Array.isArray(elem) ? elem.map(flat) : elem);
+    arr.map(flat);
+    return newArr.filter(elem => !Array.isArray(elem));
+}
 
 /**
+ * Binary Agents
+ * 
+ * Return an English translated sentence of the passed binary string.
+ * 
+ * The binary string will be space separated.
  */
+function binaryAgent(str)
+{
+    return str.split(" ").map(binary => String.fromCharCode(parseInt(binary, 2))).join("");
+}
 
 /**
+ * Everything Be True
+ * 
+ * Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+ * 
+ * In other words, you are given an array collection of objects. The predicate pre will be an object property and you need to return true if its value is truthy.
+ * Otherwise, return false.
+ * 
+ * In JavaScript, truthy values are values that translate to true when evaluated in a Boolean context.
+ * 
+ * Remember, you can access object properties through either dot notation or [] notation.
  */
+function truthCheck(collection, pre)
+{
+    return collection.map(obj => obj[pre]).every(val => val);
+}
 
 /**
+ * Arguments Optional
+ * 
+ * Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum.
+ * 
+ * For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+ * Calling this returned function with a single argument will then return the sum:
+ *      var sumTwoAnd = addTogether(2);
+ * sumTwoAnd(3) returns 5.
+ * 
+ * If either argument isn't a valid number, return undefined.
  */
+function addTogether(...args)
+{
+    if (!args.every(arg => typeof arg === "number")) return;
+    const sum = (a, b) => {
+        if (![a,b].every(arg => typeof arg === "number")) return;
+        return a + b;
+    };
+    return args.length > 1 ? args.reduce(sum, 0) : num => sum(num, args[0]);
+}
 
 /**
+ * ake a Person
+ * 
+ * Fill in the object constructor with the following methods below:
+ *      getFirstName()
+ *      getLastName()
+ *      getFullName()
+ *      setFirstName(first)
+ *      setLastName(last)
+ *      setFullName(firstAndLast)
+ * 
+ * Run the tests to see the expected output for each method. The methods that take an argument must accept only one argument and it has to be a string.
+ * These methods must be the only available means of interacting with the object.
  */
+const Person = function(firstAndLast)
+{
+    // Only change code below this line
+    // Complete the method below and implement the others similarly
+    this.getFullName = function() {
+        return firstAndLast;
+    };
+    this.getFirstName = _ => {
+        return firstAndLast.split(" ")[0];
+    };
+    this.getLastName = _ => {
+        return firstAndLast.split(" ").slice(1).join("");
+    };
+
+    this.setFullName = name => firstAndLast = name;
+    this.setFirstName = name => {
+        const last = this.getLastName();
+        firstAndLast = name +  " " + last;
+    };
+    this.setLastName = name => {
+        const first = this.getFirstName();
+        firstAndLast = first + " " + name;
+    };
+
+    return firstAndLast;
+}
 
 /**
+ * Map the Debris
+ * 
+ * According to Kepler's Third Law, the orbital period T of two point masses orbiting each other in a circular or elliptic orbit is:
+ *  T = 2 \pi \sqrt{\frac{a^{3}}{\mu}}
+ *  a is the orbit's semi-major axis
+ *  μ = GM is the standard gravitational parameter
+ *  G is the gravitational constant,
+ *  M is the mass of the more massive body.
+ * 
+ * Return a new array that transforms the elements' average altitude into their orbital periods (in seconds).
+ * 
+ * The array will contain objects in the format {name: 'name', avgAlt: avgAlt}.
+ * 
+ * The values should be rounded to the nearest whole number. The body being orbited is Earth.
+ * 
+ * The radius of the earth is 6367.4447 kilometers, and the GM value of earth is 398600.4418 km^3s^-2.
  */
+function orbitalPeriod(arr)
+{
+    const GM = 398600.4418;
+    const earthRadius = 6367.4447;
+    const newArr = arr.map(obj => {
+        const {name, avgAlt: alt} = obj;
+        const orbitalPeriod = Math.round(2*Math.PI*(((earthRadius+alt)**3)/(GM))**(1/2));
+        return {name, orbitalPeriod};
+    });
+
+    return newArr;
+}
 ```
