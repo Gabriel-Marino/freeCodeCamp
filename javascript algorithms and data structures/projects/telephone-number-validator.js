@@ -1,19 +1,39 @@
 /**
- * WORK IN PROGRESS
- * telephoneCheck should receive an american telephone number and return a boolean. Check if the number is valid or not.
- * Now keep falling in the tests of "5555555555", "555-555-5555" and "(555)555-5555" because these number's don't have the country code
- * and they're considered valid.
- * And keep failing in the test of "1 555)555-5555" because of the lack of the opening parenthesis and it's not considered valid.
+ * Telephone Number Validator
+ * 
+ * Return true if the passed string looks like a valid US phone number.
+ * 
+ * The user may fill out the form field any way they choose as long as it has the format of a valid US number.
+ * The following are examples of valid formats for US numbers (refer to the tests below for other variants):
+ * 
+ *      555-555-5555
+ *      (555)555-5555
+ *      (555) 555-5555
+ *      555 555 5555
+ *      5555555555
+ *      1 555 555 5555
+ * 
+ * For this challenge you will be presented with a string such as 800-692-7753 or 8oo-six427676;laskdjf.
+ * Your job is to validate or reject the US phone number based on any combination of the formats provided above.
+ * The area code is required. If the country code is provided, you must confirm that the country code is 1.
+ * Return true if the string is a valid US phone number; otherwise return false.
  */
 
+/**
+ * Test if the passed number is a valid US phone number.
+ * 
+ * @param {string} number - The number to test.
+ * @returns {boolean} True if the number is valid, false otherwise.
+ */
 function telephoneCheck(number)
 {
-    // is needed that number is a string
-    if (typeof number !== 'string') number.toString();
-    const COUNTRYCODEVALIDATOR = /((^|\D)^[+]?1(\D|$))/;
-    const NUMBERWITHOUTCOUNTRYCODE = number.replace(COUNTRYCODEVALIDATOR, '').replace(/\W/g, '');
-    const NUMBERVALIDATOR = /\d{10,}/;
-    return (COUNTRYCODEVALIDATOR.test(number) && NUMBERVALIDATOR.test(NUMBERWITHOUTCOUNTRYCODE));
+    const validNumRegExp = /^\d{10,}|\d{3,} \d{3,} \d{4,}|\d{3,}(\s|-)\d{3,}(\s|-)\d{4,}|\(\d{3,}\)(\s|)\d{3,}-\d{4,}/;
+    const validUScodeRegExp = /((^|\D)^[+]?1(\D|$))/;
+    const checkClosingPair = string => string.replace(/\w|\s|-/g, "").length % 2 === 0;
+
+    const num = number.replace(/\D/g, "").length <= 10 ? "1 ".concat(number) : number;
+
+    return validNumRegExp.test(number) && validUScodeRegExp.test(num) && checkClosingPair(num);
 }
 
 // The key is the number to be tested and the value is the expected result.
@@ -48,8 +68,5 @@ const DATATEST = {
         "11 555-555-5555": false,
 };
 
-// compare the return from telephoneCheck with the expected value extensively
-Object.keys(DATATEST).map(key => console.log(`The telephoneCheck evaluate to ${telephoneCheck(key)}. The value should be ${DATATEST[key]}.`));
-
 // every log should be true, testing if the return value is the expected value.
-Object.keys(DATATEST).map(key => console.log(telephoneCheck(key) === DATATEST[key]));
+Object.keys(DATATEST).map(key => console.log(key, telephoneCheck(key) === DATATEST[key]));

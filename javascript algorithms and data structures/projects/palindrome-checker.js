@@ -61,5 +61,5 @@ const DATATEST = {
   "five|\_/|four"                    : false,
 }
 
-console.log(Object.keys(DATATEST).map(key => palindrome1(key) === DATATEST[key]));
-console.log(Object.keys(DATATEST).map(key => palindrome2(key) === DATATEST[key]));
+Object.keys(DATATEST).map(key => console.log(key, palindrome1(key) === DATATEST[key]));
+Object.keys(DATATEST).map(key => console.log(key, palindrome2(key) === DATATEST[key]));

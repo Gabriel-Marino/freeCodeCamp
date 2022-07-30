@@ -12,7 +12,7 @@
  */
 
 /**
- * Convert a ROT13 encoded string to a decoded string.
+ * Convert a ROT13 encoded string to a decoded string or a decoded string to a ROT13 encoded string.
  * ROT13 is a simple letter substitution cipher that replaces a letter with the letter 13 letters after it in the alphabet.
  * 
  * @param {string} str The ROT13 encoded string.
@@ -20,14 +20,16 @@
  */
 function rot13(str)
 {
+  const isLowerCase = char => char === char.toLowerCase();
   const input = str.split("");
   let output = "";
   input.map(letter => {
     const alphanumRegExp = /\w/;
-    const code = letter.charCodeAt() - 65;
+    const k = isLowerCase(letter) ? 97 : 65;
+    const code = letter.charCodeAt() - k;
     const ROT13 = (code + 13) % 26;
     if (alphanumRegExp.test(letter)) {
-      output += String.fromCharCode(ROT13 + 65);
+      output += String.fromCharCode(ROT13 + k);
     } else {
       output += letter;
     }
