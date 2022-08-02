@@ -305,9 +305,9 @@ function dropElements(arr, func)
 function steamrollArray(arr)
 {
     const newArr = [];
-    const flat = elem => newArr.push(Array.isArray(elem) ? elem.map(flat) : elem);
+    const flat = elem => Array.isArray(elem) ? elem.map(flat) : newArr.push(elem);
     arr.map(flat);
-    return newArr.filter(elem => !Array.isArray(elem));
+    return newArr;
 }
 
 /**
